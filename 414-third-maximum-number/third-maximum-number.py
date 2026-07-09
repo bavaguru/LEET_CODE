@@ -1,12 +1,21 @@
 class Solution:
     def thirdMax(self, nums: List[int]) -> int:
-        nums = list(set(nums))
+        m1 = m2 = m3 = -float("inf")
 
-        for i in range(len(nums)):
-            for j in range(i + 1, len(nums)):
-                if nums[i] < nums[j]:
-                    nums[i], nums[j] = nums[j], nums[i]
+        for i in nums:
+            if i == m1 or i == m2 or i == m3:
+                continue
 
-        if len(nums) >= 3:
-            return nums[2]
-        return nums[0]
+            if i > m1:
+                m3 = m2
+                m2 = m1
+                m1 = i
+            elif i > m2:
+                m3 = m2
+                m2 = i
+            elif i > m3:
+                m3 = i
+
+        if m3 == -float("inf"):
+            return m1
+        return m3
